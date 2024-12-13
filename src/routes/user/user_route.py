@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required
 
 
-user_bp = Blueprint('user1',__name__)
+user_bp = Blueprint('user',__name__)
 bcrypt = Bcrypt()
 
 @user_bp.route('/create',methods=['POST'])
@@ -29,7 +29,6 @@ def login():
         return jsonify({"msg": "Email no registrado o datos incorrectos"})
 
 @user_bp.route('/get',methods=['GET'])
-@jwt_required()
 def get_user_list():
     user_list = User.query.all()
     user_list = [user.serialize() for user in user_list]

@@ -17,7 +17,7 @@ from datetime import timedelta
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-app.register_blueprint(user_bp, url_prefix="/user1")
+app.register_blueprint(user_bp, url_prefix="/user")
 
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
@@ -35,7 +35,7 @@ setup_admin(app)
 flask = JWTManager(app)
 
 app.config["SECRET_KEY"] = "clave secreta"
-app.config["JWT_ACESS_TOKEN_EXPIRES"] = timedelta(seconds=5)
+app.config["JWT_ACESS_TOKEN_EXPIRES"] = timedelta(hours=5)
 
 
 # Handle/serialize errors like a JSON object
@@ -49,17 +49,6 @@ def handle_invalid_usage(error):
 @app.route('/')
 def sitemap():
     return generate_sitemap(app)
-
-
-
-@app.route('/user', methods=['GET'])
-def handle_hello():
-
-    response_body = {
-        "msg": "Hello, this is your GET /user response "
-    }
-
-    return jsonify(response_body), 200
 
 
 
