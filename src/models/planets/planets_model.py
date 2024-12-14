@@ -1,6 +1,5 @@
 from .. import db
 
-
 class Planets(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), nullable=False)
@@ -12,7 +11,6 @@ class Planets(db.Model):
     def __repr__(self):
         return '<Planets %r>' % self.name
     
-#metodods de instacia
     def serialize(self):
         return {
             "id": self.id,
