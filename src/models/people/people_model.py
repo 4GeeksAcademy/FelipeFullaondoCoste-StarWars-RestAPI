@@ -11,7 +11,7 @@ class People(db.Model):
     # favorites = db.relationship('Favorites', back_populates='people')
 
     def __repr__(self):
-        return '<People %r>' % self.name
+        return f'<People {self.name}>'
     
     def serialize(self):
         return {

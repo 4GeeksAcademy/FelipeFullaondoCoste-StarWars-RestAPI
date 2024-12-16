@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import db, User
+from models import db, User, Favorites
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required
 
@@ -11,8 +11,8 @@ bcrypt = Bcrypt()
 def create_user():
     user_data = request.get_json()
     new_user = User(**user_data)
-    db.session.add(new_user)
     new_user.password = bcrypt.generate_password_hash(new_user.password).decode('utf-8')
+    db.session.add(new_user)
     print(new_user.password)
     db.session.commit()
     print(new_user)
@@ -42,3 +42,9 @@ def get_user(id):
     user = User.query.get(id)
     print(user)
     return jsonify({"user":user.serialize()})
+
+@user_bp.route("/favorites", methods=["GET"])
+def get_planets():
+    favorites_list = Favorites.query.all()
+    favorites_list = [favorites.serialize() for favorites in favorites_list]  
+    return jsonify({"favorites_list":favorites_list})
