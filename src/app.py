@@ -9,15 +9,13 @@ from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
 from models import db, User
-from routes import user_bp
+from routes import user_bp, people_bp, planets_bp
 from flask_jwt_extended import JWTManager, jwt_required
 from datetime import timedelta
 #from models import Person
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-
-app.register_blueprint(user_bp, url_prefix="/user")
 
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
@@ -26,7 +24,9 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
+app.register_blueprint(user_bp, url_prefix="/user")
+app.register_blueprint(people_bp, url_prefix="/people")
+app.register_blueprint(planets_bp, url_prefix="/planets")
 
 MIGRATE = Migrate(app, db)
 db.init_app(app)

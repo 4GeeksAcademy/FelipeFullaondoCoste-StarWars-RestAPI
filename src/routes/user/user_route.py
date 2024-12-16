@@ -29,6 +29,7 @@ def login():
         return jsonify({"msg": "Email no registrado o datos incorrectos"})
 
 @user_bp.route('/',methods=['GET'])
+# @jwt_required()
 def get_user_list():
     user_list = User.query.all()
     user_list = [user.serialize() for user in user_list]
