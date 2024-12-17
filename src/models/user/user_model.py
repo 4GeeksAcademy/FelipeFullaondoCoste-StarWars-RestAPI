@@ -6,7 +6,7 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
-    # favorites = db.relationship('Favorites', back_populates='User')
+    favorites = db.relationship('Favorites', back_populates='user')
 
     def __repr__(self):
         return f'<User {self.email}>'

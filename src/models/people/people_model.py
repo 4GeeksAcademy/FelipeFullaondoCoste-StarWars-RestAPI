@@ -8,7 +8,7 @@ class People(db.Model):
     eye_color = db.Column(db.String(60), nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
-    # favorites = db.relationship('Favorites', back_populates='people')
+    favorites = db.relationship('Favorites', back_populates='people')
 
     def __repr__(self):
         return f'<People {self.name}>'
