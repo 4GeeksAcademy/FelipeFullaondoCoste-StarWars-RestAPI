@@ -36,7 +36,7 @@ def get_user_list():
     print(user_list)
     return jsonify({"user_list":user_list})
 
-@user_bp.route('/<int:<int:id>',methods=['GET'])
+@user_bp.route('/<int:id>',methods=['GET'])
 # @jwt_required()
 def get_user(id):
     user = User.query.get(id)
