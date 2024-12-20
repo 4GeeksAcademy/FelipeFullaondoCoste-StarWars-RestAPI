@@ -9,7 +9,7 @@ from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
 from models import db, User
-from routes import user_bp, people_bp, planets_bp
+from routes import user_bp, people_bp, planets_bp, favorites_bp
 from flask_jwt_extended import JWTManager, jwt_required
 from datetime import timedelta
 #from models import Person
@@ -24,15 +24,18 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.register_blueprint(user_bp, url_prefix="/user")
-app.register_blueprint(people_bp, url_prefix="/people")
-app.register_blueprint(planets_bp, url_prefix="/planets")
 
 MIGRATE = Migrate(app, db)
 db.init_app(app)
 CORS(app)
 setup_admin(app)
 flask = JWTManager(app)
+
+app.register_blueprint(user_bp, url_prefix="/user")
+app.register_blueprint(people_bp, url_prefix="/people")
+app.register_blueprint(planets_bp, url_prefix="/planets")
+app.register_blueprint(favorites_bp, url_prefix='/favorites')
+
 
 app.config["SECRET_KEY"] = "clave secreta"
 app.config["JWT_ACESS_TOKEN_EXPIRES"] = timedelta(hours=5)

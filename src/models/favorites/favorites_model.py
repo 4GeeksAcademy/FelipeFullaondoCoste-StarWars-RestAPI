@@ -12,12 +12,12 @@ class Favorites(db.Model):
     planets = db.relationship('Planets', back_populates='favorites')
 
     def __repr__(self):
-        return f'<Favorites {self.id}>'
-    
+        return f'<Favourites {self.id}>'
+
     def serialize(self):
         return {
             "id": self.id,
-            "user": self.user.serialize() if self.user else None,
-            "people": self.people.serialize() if self.people else None,
-            "planets": self.planets.serialize() if self.planets else None
+            "user": self.user.serialize() if self.user else None,  
+            "people": self.people.serialize() if self.people else None, 
+            "planets": self.planets.serialize() if self.planets else None  
         }

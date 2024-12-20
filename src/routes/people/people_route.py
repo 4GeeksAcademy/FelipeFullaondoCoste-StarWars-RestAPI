@@ -1,11 +1,8 @@
 from flask import Blueprint, request, jsonify
 from models.people.people_model import People
-from models import db, People
-from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, jwt_required
+from models import db
 
 people_bp = Blueprint('people1',__name__)
-bcrypt = Bcrypt()
 
 @people_bp.route("/", methods=["GET"])
 def get_people():
@@ -14,17 +11,15 @@ def get_people():
     return jsonify({"list_people":list_people})
 
 @people_bp.route("/<int:people_id>", methods = ["GET"]) 
-def get_character(people_id):
-        person = People.query.get(people_id)
-        return jsonify({"person":person.serialize()})
+def get_people_by_id(people_id):
+        people = People.query.get(people_id)
+        return jsonify({"people":people.serialize()})
 
 @people_bp.route('/create',methods=['POST'])
-def create_user():
-    user_data = request.get_json()
-    new_people = People(**user_data)
+def create_people():
+    people_data = request.get_json()
+    new_people = People(**people_data)
     db.session.add(new_people)
-    new_people.password = bcrypt.generate_password_hash(new_people.password).decode('utf-8')
-    print(new_people.password)
     db.session.commit()
     print(new_people)
     return "Persona creada",200
